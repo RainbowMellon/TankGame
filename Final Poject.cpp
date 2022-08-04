@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include "TankGame.h"
 
@@ -13,6 +14,12 @@ int main()
 
     RenderWindow window(VideoMode(1000, 500), "Bunker Blaster");
     window.setFramerateLimit(60);
+
+    Music explosionSound;
+    explosionSound.openFromFile("explosion.ogg");
+    explosionSound.setPitch(1);
+    explosionSound.setVolume(100);
+    explosionSound.setLoop(false);
 
     CircleShape trail[16];
     CircleShape abScTr = game.getProjectile(); // Above Screen Tracker;
@@ -178,7 +185,7 @@ int main()
         { 
             explodeTimer = 60;
             fireBall.setPosition(game.getProjectile().getPosition() + Vector2f(game.getProjectileMomentum().x / 2, game.getProjectileMomentum().y / 2));
-            
+            explosionSound.play();
         }
         fireBall.setRadius(explodeTimer);
         fireBall.setOrigin(explodeTimer, explodeTimer);
